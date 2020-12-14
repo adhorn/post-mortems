@@ -15,7 +15,13 @@
 
 ## Config Errors
 
+[Allegro](https://allegro.tech/2018/08/postmortem-why-allegro-went-down.html). E-commerce site went down after a sudden traffic spike caused by a marketing campaign. The outage was caused by a configuration error in cluster resource management which prevented more service instances from starting even though hardware resources were available.   
+
 [Cloudflare](https://blog.cloudflare.com/todays-outage-post-mortem-82515/). A bad config (router rule) caused all of their edge routers to crash, taking down all of Cloudflare.
+
+[Cloudflare](https://blog.cloudflare.com/cloudflare-outage-on-july-17-2020/). During a maintenance of their private backbone network, an engineer made a typo in the Atlanta datacenter network configuration, causing all traffic coming from America and Europe flowing to this only datacenter, crushing it.
+
+[DataDog](https://www.datadoghq.com/blog/2020-09-25-infrastructure-connectivity-issue/). A bad service discovery config in one of the clients brought down service discovery globally when a dependent client went down.
 
 [Etsy](https://codeascraft.com/2012/01/23/solr-bittorrent-index-replication/). Sending multicast traffic without properly configuring switches caused an Etsy global outage.
 
@@ -35,13 +41,19 @@
 
 [Google](https://status.cloud.google.com/incident/storage/19002). A configuration change intended to address an uptick in demand for metadata storage, which overloaded part of the blob lookup system, which caused a cascading failure with user-visible service impact to Gmail, Google Photos, Google Drive, and other GCP services dependent on blob storage.
 
-[Google](https://status.cloud.google.com/incident/cloud-networking/19009). Two misconfigurations, plus a software bug, caused a massive Google Cloud Network failure on the US East Coast. 
+[Google](https://status.cloud.google.com/incident/cloud-networking/19009). Two misconfigurations, plus a software bug, caused a massive Google Cloud Network failure on the US East Coast.
 
 [Heroku](https://status.heroku.com/incidents/1091). An automated remote configuration change did not propagate fully. Web dynos could not be started.
+
+[Heroku](https://blog.heroku.com/how-i-broke-git-push-heroku-main). An incorrect deployment process caused new config variables not to be used when the code required them.
+
+[Keepthescore](https://keepthescore.co/blog/posts/deleting_the_production_database/). Engineers deleted the production database by accident. Database is a managed database from DigitalOcean with backups once a day. 30 minutes after the disaster, it went back online, however 7 hours of scoreboard data was gone forever.
 
 [Microsoft](http://azure.microsoft.com/blog/2014/11/19/update-on-azure-storage-service-interruption/). A bad config took down Azure storage.
 
 [OWASA](http://www.indyweek.com/news/archives/2017/02/10/human-error-caused-owasa-fluoride-overdose-owasa-very-sorry-about-that). The wrong push of a button lead to a water treatment plant shutting down due to too high levels of fluoride.
+
+[Razorpay](https://razorpay.com/blog/day-of-rds-multi-az-failover/). A RDS hardware failure highlighted an incorrect MySQL configuration which resulted in major data loss in a financial system.
 
 [Stack Overflow](http://stackstatus.net/post/96025967369/outage-post-mortem-august-25th-2014). A bad firewall config blocked stackexchange/stackoverflow.
 
@@ -67,11 +79,15 @@
 
 [ARPANET](http://www.faqs.org/rfcs/rfc789.html). A malfunctioning IMP ([Interface Message Processor](https://en.wikipedia.org/wiki/Interface_Message_Processor)) corrupted routing data, software recomputed checksums propagating bad data with good checksums, incorrect sequence numbers caused buffers to fill, full buffers caused loss of keepalive packets and nodes took themselves off the network. From 1980.
 
+[Cloudflare](https://blog.cloudflare.com/a-byzantine-failure-in-the-real-world/). A partial switch misbehavior caused a cascading Byzantine failure which impacted the availability of the API and dashboard for six hours and 33 minutes.
+
 [FirstEnergy / General Electric](https://en.wikipedia.org/wiki/Northeast_blackout_of_2003). FirstEnergy had a local failure when some transmission lines hit untrimmed foliage. The normal process is to have an alarm go off, which causes human operators to re-distribute power. But the GE system that was monitoring this had a bug which prevented the alarm from getting triggered, which eventually caused a cascading failure that eventually affected 55 million people.
 
 [GitHub](https://github.com/blog/2106-january-28th-incident-report). On January 28th, 2016 GitHub experienced a disruption in the power at their primary datacenter.
 
 [Google](https://status.cloud.google.com/incident/compute/15056#5719570367119360). Successive lightning strikes on their European datacenter (europe-west1-b) caused loss of power to Google Compute Engine storage systems within that region. I/O errors were observed on a subset of Standard Persistent Disks (HDDs) and permanent data loss was observed on a small fraction of those.
+
+[PythonAnywhere](https://blog.pythonanywhere.com/189/). A storage volume failure on one of storage servers caused a number of outages, starting with PythonAnywhere site and also with our users’ programs (including websites) that were dependent on that volume, and later spreading to other hosted sites.
 
 [Sun](https://www.forbes.com/forbes/2000/1113/6613068a.html#6d1bdc036162). Sun famously didn't include ECC in a couple generations of server parts. This resulted in data corruption and crashing. Following Sun's typical MO, they made customers that reported a bug sign an NDA before explaining the issue.
 
@@ -85,7 +101,7 @@
 
 [Google](https://status.cloud.google.com/incident/compute/17003#5660850647990272). Many changes to a rarely modified load balancer were applied through a very slow code path. This froze all public addressing changes for ~2 hours.
 
-[Knight Capital](http://pythonsweetness.tumblr.com/post/64740079543/how-to-lose-172222-a-second-for-45-minutes). A combination of conflicting deployed versions and re-using a previously used bit caused a $460M loss.
+[Knight Capital](https://dougseven.com/2014/04/17/knightmare-a-devops-cautionary-tale/). A combination of conflicting deployed versions and re-using a previously used bit caused a $460M loss.
 
 [WebKit code repository](http://blogs.collab.net/subversion/subversion-sha1-collision-problem-statement-prevention-remediation-options). The WebKit repository, a Subversion repository configured to use deduplication, became unavailable after two files with the same SHA-1 hash were checked in as test data, with the intention of implementing a safety check for collisions. The two files had different md5 sums and so a checkout would fail a consistency check. For context, the first public SHA-1 hash collision had very recently been announced, with an example of two colliding files.
 
@@ -115,17 +131,27 @@
 
 [Amazon](https://aws.amazon.com/message/5467D2/). A "network disruption" caused metadata services to experience load that caused response times to exceed timeout values, causing storage nodes to take themselves down. Nodes that took themselves down continued to retry, ensuring that load on metadata services couldn't decrease.
 
-[AppNexus](http://techblog.appnexus.com/2013/2013-09-17-outage-postmortem/). A double free revealed by a database update caused all "impression bus" servers to crash simultaneously. This wasn't caught in staging and made it into production because a time delay is required to trigger the bug, and the staging period didn't have a built-in delay.
+[Amazon](https://aws.amazon.com/message/11201/). Scaling the front-end cache fleet for Kinesis caused all of the servers in the fleet to exceed the maximum number of threads allowed by an operating system configuration. Multiple critical downstream services affected, from Cognito to Lambda to CloudWatch.
+
+[AppNexus](https://medium.com/xandr-tech/2013-09-17-outage-postmortem-586b19ae4307). A double free revealed by a database update caused all "impression bus" servers to crash simultaneously. This wasn't caught in staging and made it into production because a time delay is required to trigger the bug, and the staging period didn't have a built-in delay.
 
 [AT&T](http://users.csc.calpoly.edu/~jdalbey/SWE/Papers/att_collapse.html). A bad line of C code introduced a race hazard which in due course collapsed the phone network. After a planned outage, the quickfire resumption messages triggered the race,  causing more reboots which retriggered the problem. "The problem repeated iteratively throughout the 114 switches in the network, blocking over 50 million calls in the nine hours it took to stabilize the system." From 1990.
 
+[Basecamp](https://signalvnoise.com/posts/3729-basecamp-network-attack-postmortem), [see also](https://signalvnoise.com/posts/3728-basecamp-was-under-network-attack-this-morning). Basecamp's network was under a DDoS attack during a 100-minute window on March 24, 2014.
+
+[Basecamp](https://m.signalvnoise.com/postmortem-on-the-read-only-outage-of-basecamp-on-november-9th-2018/), [see also](https://m.signalvnoise.com/update-on-basecamp-3-being-stuck-in-read-only-as-of-nov-8-922am-cst/). In November 2018 a database hit the integer limit, leaving the service in read-only mode. 
+
 [BBC Online](http://www.bbc.co.uk/blogs/internet/entries/a37b0470-47d4-3991-82bb-a7d5b8803771). In July 2014, BBC Online experienced a very long outage of several of its popular online services including the BBC iPlayer. When the database backend was overloaded, it had started to throttle requests from various services. Services that hadn't cached the database responses locally began timing out and eventually failed completely.
+
+[Bintray](https://status.bintray.com/incidents/w4dfr0rpznkt). In July 2017 several malicious Maven packages were included in JCenter with an impersonation attack. Those packages lived in JCenter for over a year and supposedly affected several Android apps that resulted in having malware code injected by those dependencies from JCenter.
 
 [Bitly](http://blog.bitly.com/post/85260908544/more-detail). Hosted source code repo contained credentials granting access to bitly backups, including hashed passwords.
 
 [BrowserStack](https://www.browserstack.com/attack-and-downtime-on-9-November). An old prototype machine with the [Shellshock](https://en.wikipedia.org/wiki/Shellshock_(software_bug)) vulnerability still active had secret keys on it which ultimately led to a security breach of the Production system.
 
 [Buildkite](https://building.buildkite.com/outage-post-mortem-for-august-23rd-82b619a3679b). Database capacity downgrade in an attempt to minimise AWS spend resulted in lack of capacity to support Buildkite customers at peak, leading to cascading collapse of dependent servers.
+
+[Bungie](https://www.bungie.net/en/News/Article/48723). Side effects of a bug fix for wrong timestamps causes data loss; server misconfiguration for the hotfix causes the data loss to reappear in several servers in a following update.
 
 [CCP Games](http://community.eveonline.com/news/dev-blogs/behind-the-scenes-of-a-long-eve-online-downtime/). A problematic logging channel caused cluster nodes dying off during the cluster start sequence after rolling out a new game patch.
 
@@ -145,15 +171,21 @@
 
 [Dropbox](https://blogs.dropbox.com/tech/2014/01/outage-post-mortem/). This postmortem is pretty thin and I'm not sure what happened. It sounds like, maybe, a scheduled OS upgrade somehow caused some machines to get wiped out, which took out some databases.
 
-[Duo](https://status.duo.com/incidents/4w07bmvnt359). Cascading failure due to a request queue overloading the existing, insufficient database capacity. Inadequate capacity planning and monitoring could be attributed as well.  
+[Duo](https://status.duo.com/incidents/4w07bmvnt359). Cascading failure due to a request queue overloading the existing, insufficient database capacity. Inadequate capacity planning and monitoring could be attributed as well.
 
 [Epic Games](https://www.epicgames.com/fortnite/en-US/news/postmortem-of-service-outage-at-3-4m-ccu). Extreme load (a new peak of 3.4 million concurrent users) resulted in a mix of partial and total service disruptions.
 
 [European Space Agency](https://en.wikipedia.org/wiki/Cluster_%28spacecraft%29?oldid=217305667). An overflow occured when converting a 16-bit number to a 64-bit numer in the Ariane 5 intertial guidance system, causing the rocket to crash. The actual overflow occured in code that wasn't necessary for operation but was running anyway. According to [one account](http://www.around.com/ariane.html), this caused a diagnostic error message to get printed out, and the diagnostic error message was somehow interpreted as actual valid data. According to [another account](https://en.wikipedia.org/wiki/Cluster_%28spacecraft%29?oldid=217305667), no trap handler was installed for the overflow.
 
+[Elastic](https://www.elastic.co/blog/elastic-cloud-january-18-2019-incident-report). Elastic Cloud customers with deployments in the AWS eu-west-1 (Ireland) region experienced severely degraded access to their clusters for roughly 3 hours. During this same timeframe, there was an approximately 20 minute period during which all deployments in this region were completely unavailable.
+
+[Elastic](https://www.elastic.co/blog/elastic-cloud-incident-report-feburary-4-2019). Elastic Cloud customers with deployments in the AWS us-east-1 region experienced degraded access to their clusters.
+
 [ESLint](https://eslint.org/blog/2018/07/postmortem-for-malicious-package-publishes). On July 12th, 2018, an attacker compromised the npm account of an ESLint maintainer and published malicious packages to the npm registry.
 
 [Etsy](https://blog.etsy.com/news/2012/demystifying-site-outages/). First, a deploy that was supposed to be a small bugfix deploy also caused live databases to get upgraded on running production machines. To make sure that this didn't cause any corruption, Etsy stopped serving traffic to run integrity checks. Second, an overflow in ids (signed 32-bit ints) caused some database operations to fail. Etsy didn't trust that this wouldn't result in data corruption and took down the site while the upgrade got pushed.
+
+[Flowdock](https://flowdock-resources.s3.amazonaws.com/legal/Flowdock-RCA-For-Incident-On-2020-04-21.pdf). Flowdock instant messaging was unavailable for approx 24 hrs between April 21-22 2020. The COVID-19 pandemic caused a sudden and drastic increase in working from home, which caused a higher usage of Flowdock, which caused high CPU usage, which caused the application database to hang. Some user data was permanently lost.
 
 [Foursquare](https://news.ycombinator.com/item?id=1769761). MongoDB fell over under load when it ran out of memory. The failure was catastrophic and not graceful due to a a query pattern that involved a read-load with low levels of locality (each user check-in caused a read of all check-ins for the user's history, and records were 300 bytes with no spatial locality, meaning that most of the data pulled in from each page was unnecessary). A lack of monitoring on the MongoDB instances caused the high load to go undetected until the load became catastrophic, causing 17 hours of downtime spanning two incidents in two days.
 
@@ -161,9 +193,9 @@
 
 [GitHub](https://githubengineering.com/ddos-incident-report/). On February 28th 2018, GitHub experienced a DDoS attack, hitting the website with 1.35Tbps of traffic.
 
-[Gitlab 2014](https://docs.google.com/document/d/1ScqXAdb6BjhsDzCo3qdPYbt1uULzgZqPO8zHeHHarS0/preview?sle=true&hl=en&forcehl=1#heading=h.dfbilqgnc5sf). After the primary locked up and was restarted, it was brought back up with the wrong filesystem, causing a global outage. See also [HN discussion](https://news.ycombinator.com/item?id=8003601).
+[Gitlab](https://docs.google.com/document/d/1ScqXAdb6BjhsDzCo3qdPYbt1uULzgZqPO8zHeHHarS0/preview?sle=true&hl=en&forcehl=1#heading=h.dfbilqgnc5sf). After the primary locked up and was restarted, it was brought back up with the wrong filesystem, causing a global outage. See also [HN discussion](https://news.ycombinator.com/item?id=8003601).
 
-[Gitlab 2017](https://about.gitlab.com/2017/02/10/postmortem-of-database-outage-of-january-31/). Influx of requests overloaded the database, caused replication to lag, tired admin deleted the wrong directory, six hours of data lost. See also [earlier report](https://about.gitlab.com/2017/02/01/gitlab-dot-com-database-incident) and [HN discussion](https://news.ycombinator.com/item?id=13537052).
+[Gitlab](https://about.gitlab.com/2017/02/10/postmortem-of-database-outage-of-january-31/). Influx of requests overloaded the database, caused replication to lag, tired admin deleted the wrong directory, six hours of data lost. See also [earlier report](https://about.gitlab.com/2017/02/01/gitlab-dot-com-database-incident) and [HN discussion](https://news.ycombinator.com/item?id=13537052).
 
 [Gliffy](https://www.gliffy.com/blog/turtle-and-the-hare). While attempting to resolve an issue with a backup system the production database was accidentally deleted causing a system outage.
 
@@ -205,7 +237,7 @@
 
 [NASA](https://en.wikipedia.org/wiki/Mars_Climate_Orbiter). Use of different units of measurement (metric vs. English) caused Mars Climate Orbiter to fail. There were also organisational and procedural failures[[ref](http://space.stackexchange.com/a/20241)] and defects in the navigation software[[ref](http://spectrum.ieee.org/aerospace/robotic-exploration/why-the-mars-probe-went-off-course)].
 
-[NASA](http://research.microsoft.com/en-us/um/people/mbj/Mars_Pathfinder/Authoritative_Account.html). NASA's Mars Pathfinder spacecraft experienced system resets a few days after landing on Mars (1997).  Debugging features were remotely enabled until the cause was found: a [priority inversion](https://en.wikipedia.org/wiki/Priority_inversion) problem in the VxWorks operating system.  The OS software was remotely patched (all the way to Mars) to fix the problem by adding priority inheritance to the task scheduler.
+[NASA](https://web.archive.org/web/20161230103247/http://research.microsoft.com/en-us/um/people/mbj/Mars_Pathfinder/Authoritative_Account.html). NASA's Mars Pathfinder spacecraft experienced system resets a few days after landing on Mars (1997).  Debugging features were remotely enabled until the cause was found: a [priority inversion](https://en.wikipedia.org/wiki/Priority_inversion) problem in the VxWorks operating system.  The OS software was remotely patched (all the way to Mars) to fix the problem by adding priority inheritance to the task scheduler.
 
 [Netflix](http://techblog.netflix.com/2012/10/post-mortem-of-october-222012-aws.html). An EBS outage in one availability zone was mitigated by migrating to other availability zones.
 
@@ -223,7 +255,7 @@
 
 [Salesforce](https://help.salesforce.com/apex/HTViewSolution?urlname=Root-Cause-Message-for-Disruption-of-Service-on-NA14-May-2016&language=en_US). Initial disruption due to power failure in one datacenter led to cascading failures with a database cluster and file discrepancies resulting in cross data center failover issues.
 
-[Sentry](http://blog.getsentry.com/2015/07/23/transaction-id-wraparound-in-postgres.html). Transaction ID Wraparound in Postgres caused Sentry to go down for most of a working day.
+[Sentry](https://blog.sentry.io/2015/07/23/transaction-id-wraparound-in-postgres). Transaction ID Wraparound in Postgres caused Sentry to go down for most of a working day.
 
 [Shapeshift](https://www.scribd.com/doc/309574927/ShapeShift-Post-Mortem-Public). Poor security practices enabled an employee to steal $200,000 in cryptocurrency in 3 separate hacks over a 1 month period. The company's CEO expanded upon the story in a [blog post](http://moneyandstate.com/looting-of-the-fox/).
 
@@ -301,7 +333,7 @@
 
 ## Analysis
 
-[How Complex Systems Fail](http://web.mit.edu/2.75/resources/random/How%20Complex%20Systems%20Fail.pdf)
+[How Complex Systems Fail](https://stuff.mit.edu/afs/athena/course/2/2.75/resources/random/How%20Complex%20Systems%20Fail.pdf)
 
 [John Allspaw on Resilience Engineering](http://www.kitchensoap.com/2011/04/07/resilience-engineering-part-i/)
 
@@ -318,6 +350,7 @@
 * Ben Zanin
 * Brad Baris
 * Brendan McLoughlin
+* Brent Eritou
 * Brian Scanlan
 * Brock Boland
 * Chris Higgs
@@ -353,11 +386,13 @@
 * Massimiliano Arione
 * Matt Day
 * Michael Robinson
+* Michał Kosmulski
 * Mike Doherty
 * Mohit Agarwal
 * Nat Welch
 * Nate Parsons
 * Nick Sweeting
+* Nicola Corti
 * Owen Jacobson
 * Peter Demin
 * Raul Ochoa
@@ -366,6 +401,7 @@
 * Sean Escriva
 * Shriram Rajagopalan
 * Siddharth Kannan
+* Tamir Dresher
 * Tim Freeman
 * Tom Crayford
 * Vaibhav Bhembre
