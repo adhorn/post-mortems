@@ -296,11 +296,11 @@
 
 [Instapaper](https://web.archive.org/web/20211124170124/https://medium.com/making-instapaper/instapaper-outage-cause-recovery-3c32a7e9cc5f). Also [this](https://blog.instapaper.com/post/157027537441). Limits were hit for a hosted database. It took many hours to migrate over to a new database.
 
-[Intel](https://42gems.com/blog/?p=735). A scripting bug caused the generation of the divider logic in the Pentium to very occasionally produce incorrect results. The bug wasn't caught in testing because of an incorrect assumption in a proof of correctness. (See [the Wikipedia article on 1994 FDIV bug](https://en.wikipedia.org/wiki/Pentium_FDIV_bug) for more information.)
+[Intel](https://web.archive.org/web/20250114104931/https://42gems.com/blog/?p=735). A scripting bug caused the generation of the divider logic in the Pentium to very occasionally produce incorrect results. The bug wasn't caught in testing because of an incorrect assumption in a proof of correctness. (See [the Wikipedia article on 1994 FDIV bug](https://en.wikipedia.org/wiki/Pentium_FDIV_bug) for more information.)
 
 [Joyent](https://www.joyent.com/blog/manta-postmortem-7-27-2015). Operations on Manta were blocked because a lock couldn't be obtained on their PostgreSQL metadata servers. This was due to a combination of PostgreSQL's transaction wraparound maintenance taking a lock on something, and a Joyent query that unnecessarily tried to take a global lock.
 
-[Joyent](https://www.joyent.com/blog/postmortem-for-outage-of-us-east-1-may-27-2014). An operator used a tool with lax input validation to reboot a small number of servers undergoing maintenance but forgot to type `-n` and instead rebooted all servers in the datacenter. This caused an outage that lasted 2.5 hours, rebooted all customer instances, put tremendous load on DHCP/TFTP PXE boot systems, and left API systems requiring manual intervention. See also [Bryan Cantrill's talk](https://www.youtube.com/watch?v=30jNsCVLpAE).
+[Joyent](https://web.archive.org/web/20220406095752/https://www.joyent.com/blog/postmortem-for-outage-of-us-east-1-may-27-2014). An operator used a tool with lax input validation to reboot a small number of servers undergoing maintenance but forgot to type `-n` and instead rebooted all servers in the datacenter. This caused an outage that lasted 2.5 hours, rebooted all customer instances, put tremendous load on DHCP/TFTP PXE boot systems, and left API systems requiring manual intervention. See also [Bryan Cantrill's talk](https://www.youtube.com/watch?v=30jNsCVLpAE).
 
 [Kickstarter](https://web.archive.org/web/20170728131458/https://kickstarter.engineering/the-day-the-replication-died-e543ba45f262). Primary DB became inconsistent with all replicas, which wasn't detected until a query failed. This was caused by a MySQL bug which sometimes caused `order by` to be ignored.
 
@@ -328,7 +328,7 @@
 
 [Okta](https://www.okta.com/blog/2022/03/oktas-investigation-of-the-january-2022-compromise/). A hackers group got access to a third-party support engineer's laptop.
 
-[OpenAI](https://openai.com/blog/march-20-chatgpt-outage). Queues for requests and responses in a Redis cache became corrupted and out of sequence, leading to some requests revealing other people's user data to some users, including app activity data and some billing info.
+[OpenAI](https://web.archive.org/web/20240426015133/https://openai.com/blog/march-20-chatgpt-outage). Queues for requests and responses in a Redis cache became corrupted and out of sequence, leading to some requests revealing other people's user data to some users, including app activity data and some billing info.
 
 [Pagerduty](https://web.archive.org/web/20211019062735/https://www.pagerduty.com/blog/outage-post-mortem-april-13-2013/). In April 2013, [Pagerduty](https://web.archive.org/web/20220906003007/https://www.pagerduty.com/), a cloud service proving application uptime monitoring and real-time notifications, suffered an outage when two of its three independent cloud deployments in different data centers began experiencing connectivity issues and high network latency. It was found later that the two independent deployments shared a common peering point which was experiencing network instability.  While the third deployment was still operational, Pagerduty's applications failed to establish quorum due to to high network latency and hence failed in their ability to send notifications.
 
